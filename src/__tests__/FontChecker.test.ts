@@ -93,7 +93,14 @@ describe('FontChecker', () => {
       const result = await checker.check('Arial');
       
       expect(result).toEqual({
-        success: true
+        success: true,
+        allFonts: [
+          {
+            name: 'Arial',
+            loaded: true,
+            status: 'loaded'
+          }
+        ]
       });
     });
     
@@ -102,9 +109,14 @@ describe('FontChecker', () => {
       const result = await checker.check(['Arial', 'NonExistentFont']);
       
       expect(result.success).toBe(false);
+      expect(result.allFonts).toHaveLength(2);
       expect(result.failedFonts).toHaveLength(1);
       expect(result.failedFonts![0].name).toBe('NonExistentFont');
       expect(result.failedFonts![0].loaded).toBe(false);
+      
+      // 验证所有字体都在allFonts中
+      expect(result.allFonts.find(f => f.name === 'Arial')).toBeDefined();
+      expect(result.allFonts.find(f => f.name === 'NonExistentFont')).toBeDefined();
     });
     
     test('应该检查所有已加载的字体', async () => {
@@ -112,15 +124,26 @@ describe('FontChecker', () => {
       const result = await checker.check();
       
       expect(result.success).toBe(true);
+      expect(result.allFonts).toHaveLength(3); // Arial, Helvetica, Times New Roman
+      expect(result.allFonts.every(font => font.loaded)).toBe(true);
     });
   });
 
   describe('动态字体管理', () => {
     test('应该能够添加字体', () => {
       const checker = new FontChecker();
+      
+      const result = checker.addFont('CustomFont', '/path/to/custom-font.woff2');
+      
+      expect(result).toBe(true);
+      expect(addedFonts.size).toBe(1);
+    });
+    
+    test('应该能够添加FontFace对象', () => {
+      const checker = new FontChecker();
       const font = new MockFontFace('CustomFont', 'url(/path/to/custom-font.woff2)');
       
-      const result = checker.addFont(font as any);
+      const result = checker.addFontFace(font as any);
       
       expect(result).toBe(true);
       expect(addedFonts.size).toBe(1);
@@ -132,7 +155,7 @@ describe('FontChecker', () => {
       const font = new MockFontFace('CustomFont', 'url(/path/to/custom-font.woff2)');
       
       // 先添加字体
-      checker.addFont(font as any);
+      checker.addFontFace(font as any);
       expect(addedFonts.size).toBe(1);
       
       // 然后删除字体
@@ -146,10 +169,8 @@ describe('FontChecker', () => {
       const checker = new FontChecker();
       
       // 添加多个字体
-      const font1 = new MockFontFace('CustomFont1', 'url(/path/to/custom-font1.woff2)');
-      const font2 = new MockFontFace('CustomFont2', 'url(/path/to/custom-font2.woff2)');
-      checker.addFont(font1 as any);
-      checker.addFont(font2 as any);
+      checker.addFont('CustomFont1', '/path/to/custom-font1.woff2');
+      checker.addFont('CustomFont2', '/path/to/custom-font2.woff2');
       
       expect(addedFonts.size).toBe(2);
       
@@ -164,16 +185,29 @@ describe('FontChecker', () => {
       const checker = new FontChecker();
       
       // 添加自定义字体
-      const customFont = new MockFontFace('CustomFont', 'url(/path/to/custom-font.woff2)');
-      customFont.status = 'loaded';
-      checker.addFont(customFont as any);
+      checker.addFont('CustomFont', '/path/to/custom-font.woff2');
       
       const result = await checker.check();
       
       expect(result.success).toBe(true);
+      expect(result.allFonts.length).toBeGreaterThan(3); // 至少包含原有的3个字体加上新添加的1个
       
       // 清理
       checker.clearFonts();
+    });
+    
+    test('应该能够通过字体名称删除字体', () => {
+      const checker = new FontChecker();
+      
+      // 先添加字体
+      checker.addFont('CustomFont', '/path/to/custom-font.woff2');
+      expect(addedFonts.size).toBe(1);
+      
+      // 然后通过字体名称删除字体
+      const result = checker.deleteFont('CustomFont');
+      
+      expect(result).toBe(true);
+      expect(addedFonts.size).toBe(0);
     });
   });
   

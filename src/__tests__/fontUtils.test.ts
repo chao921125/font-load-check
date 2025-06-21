@@ -3,6 +3,7 @@ import {
   checkFont,
   checkFonts,
   addFont,
+  addFontFace,
   deleteFont,
   clearFonts,
   isFontLoaded,
@@ -83,6 +84,9 @@ describe('fontUtils', () => {
           setTimeout(() => reject(new Error('Font load timeout')), 100)
         )
       );
+      // 模拟 document.fonts.check 返回 false
+      mockFonts.check.mockReturnValue(false);
+      
       const result = await checkFont('NonExistentFont');
       expect(result.loaded).toBe(false);
     });
@@ -93,6 +97,9 @@ describe('fontUtils', () => {
       const result = await checkFonts(['Arial', 'Helvetica']);
       expect(result).toBeDefined();
       expect(result.success).toBe(true);
+      expect(Array.isArray(result.allFonts)).toBe(true);
+      expect(result.allFonts.length).toBe(2);
+      expect(result.allFonts.every(font => font.loaded)).toBe(true);
     });
 
     it('应该处理部分字体失败的情况', async () => {
@@ -108,9 +115,17 @@ describe('fontUtils', () => {
         return Promise.resolve({ family: 'TestFont', source: 'url(/test.woff2)' });
       });
       
+      // 模拟 document.fonts.check 对特定字体返回 false
+      mockFonts.check.mockImplementation((fontString) => {
+        return !fontString.includes('NonExistentFont');
+      });
+      
       const result = await checkFonts(['Arial', 'NonExistentFont']);
       expect(result.success).toBe(false);
+      expect(result.allFonts).toBeDefined();
+      expect(result.allFonts.length).toBe(2);
       expect(result.failedFonts).toBeDefined();
+      expect(result.failedFonts!.length).toBe(1);
       expect(result.failedFonts![0].name).toBe('NonExistentFont');
       expect(result.failedFonts![0].loaded).toBe(false);
     });
@@ -118,28 +133,55 @@ describe('fontUtils', () => {
 
   describe('addFont', () => {
     it('应该添加字体', () => {
-      const fontFace = new (global as any).FontFace('TestFont', 'url(/test.woff2)');
-      const result = addFont(fontFace);
+      const result = addFont('TestFont', '/test.woff2');
       expect(result).toBe(true);
-      expect(mockFonts.add).toHaveBeenCalledWith(fontFace);
+      expect(mockFonts.add).toHaveBeenCalled();
     });
 
     it('应该处理添加字体失败的情况', () => {
       mockFonts.add.mockImplementation(() => {
         throw new Error('Add font failed');
       });
+      const result = addFont('TestFont', '/test.woff2');
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('addFontFace', () => {
+    it('应该添加FontFace对象', () => {
       const fontFace = new (global as any).FontFace('TestFont', 'url(/test.woff2)');
-      const result = addFont(fontFace);
+      const result = addFontFace(fontFace);
+      expect(result).toBe(true);
+      expect(mockFonts.add).toHaveBeenCalledWith(fontFace);
+    });
+
+    it('应该处理添加FontFace失败的情况', () => {
+      mockFonts.add.mockImplementation(() => {
+        throw new Error('Add font failed');
+      });
+      const fontFace = new (global as any).FontFace('TestFont', 'url(/test.woff2)');
+      const result = addFontFace(fontFace);
       expect(result).toBe(false);
     });
   });
 
   describe('deleteFont', () => {
-    it('应该删除字体', () => {
+    it('应该删除字体（使用FontFace对象）', () => {
       const fontFace = new (global as any).FontFace('TestFont', 'url(/test.woff2)');
       const result = deleteFont(fontFace);
       expect(result).toBe(true);
       expect(mockFonts.delete).toHaveBeenCalledWith(fontFace);
+    });
+
+    it('应该删除字体（使用字体名称）', () => {
+      // 模拟addedFonts中有一个匹配的字体
+      const fontFace = new (global as any).FontFace('TestFont', 'url(/test.woff2)');
+      const checker = createFontChecker();
+      addFontFace(fontFace);
+      
+      const result = deleteFont('TestFont');
+      expect(result).toBe(true);
+      expect(mockFonts.delete).toHaveBeenCalled();
     });
 
     it('应该处理删除字体失败的情况', () => {
@@ -211,6 +253,7 @@ describe('fontUtils', () => {
       const result = await waitForFonts(['Arial', 'Helvetica']);
       expect(result).toBeDefined();
       expect(typeof result.success).toBe('boolean');
+      expect(Array.isArray(result.allFonts)).toBe(true);
     });
 
     it('应该使用提供的超时时间', async () => {

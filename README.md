@@ -138,29 +138,45 @@ if (result.success) {
 ### 动态字体管理
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import { addFont, deleteFont, clearFonts } from 'font-load-checker';
 
-const checker = new FontChecker();
+// 直接添加字体，无需创建FontFace对象
+addFont('MyCustomFont', '/fonts/custom-font.woff2');
 
-// 创建字体实例
-const fontFace = new FontFace('MyCustomFont', 'url(/fonts/myfont.woff2)');
-
-// 加载字体
-fontFace.load().then(() => {
-  // 添加到字体检查器
-  const success = checker.addFont(fontFace);
-  if (success) {
-    console.log('字体添加成功');
+// 检查字体是否加载成功
+checkFont('MyCustomFont').then(result => {
+  if (result.loaded) {
+    console.log('字体加载成功');
   } else {
-    console.log('字体添加失败');
+    console.log('字体加载失败');
   }
 });
 
-// 删除字体
-checker.deleteFont(fontFace);
+// 通过字体名称删除字体
+deleteFont('MyCustomFont');
 
 // 清除所有动态添加的字体
-checker.clearFonts();
+clearFonts();
+```
+
+如果需要更高级的控制，也可以使用FontChecker实例：
+
+```javascript
+import { createFontChecker } from 'font-load-checker';
+
+// 创建自定义配置的字体检查器
+const checker = createFontChecker({ timeout: 5000 });
+
+// 添加字体
+checker.addFont('CustomFont', '/fonts/custom-font.woff2');
+
+// 检查字体
+checker.check('CustomFont').then(result => {
+  console.log(result);
+});
+
+// 删除字体
+checker.deleteFont('CustomFont');
 ```
 
 ### 使用工具函数
@@ -281,8 +297,9 @@ constructor(options?: FontCheckerOptions)
 
 **方法：**
 - `async check(fontNames?: string | string[]): Promise<FontLoadResult>`
-- `addFont(font: FontFace): boolean`
-- `deleteFont(font: FontFace): boolean`
+- `addFont(fontName: string, url: string, options?: FontFaceDescriptors): boolean`
+- `addFontFace(font: FontFace): boolean`
+- `deleteFont(font: FontFace | string): boolean`
 - `clearFonts(): boolean`
 
 ### 工具函数
@@ -364,3 +381,144 @@ MIT © huangchao
 - [示例代码](examples/)
 - [更新日志](CHANGELOG.md)
 - [问题反馈](https://github.com/huangchao/font-load-checker/issues)
+
+## 使用方法
+
+### 安装
+
+```bash
+npm install font-load-checker
+```
+
+或
+
+```bash
+yarn add font-load-checker
+```
+
+### 基本用法
+
+```javascript
+import { checkFont, checkFonts } from 'font-load-checker';
+
+// 检查单个字体
+checkFont('Arial').then(result => {
+  console.log(result);
+  // { name: 'Arial', loaded: true, status: 'loaded' }
+});
+
+// 检查多个字体
+checkFonts(['Arial', 'Helvetica', 'NonExistentFont']).then(result => {
+  console.log(result);
+  /*
+  {
+    success: false,
+    allFonts: [
+      { name: 'Arial', loaded: true, status: 'loaded' },
+      { name: 'Helvetica', loaded: true, status: 'loaded' },
+      { name: 'NonExistentFont', loaded: false, status: 'error' }
+    ],
+    failedFonts: [
+      { name: 'NonExistentFont', loaded: false, status: 'error' }
+    ]
+  }
+  */
+});
+```
+
+### 动态添加字体
+
+```javascript
+import { addFont, addFontFace } from 'font-load-checker';
+
+// 方法1：通过字体名称和URL添加字体
+addFont('MyCustomFont', '/fonts/custom-font.woff2');
+
+// 方法2：通过FontFace对象添加字体
+const fontFace = new FontFace('MyCustomFont', 'url(/fonts/custom-font.woff2)');
+addFontFace(fontFace);
+
+// 添加字体后检查是否加载成功
+checkFont('MyCustomFont').then(result => {
+  console.log(result);
+});
+```
+
+### 高级用法
+
+```javascript
+import { createFontChecker, deleteFont, clearFonts } from 'font-load-checker';
+
+// 创建自定义配置的字体检查器
+const checker = createFontChecker({ timeout: 5000 });
+
+// 添加字体
+checker.addFont('CustomFont', '/fonts/custom-font.woff2');
+
+// 检查字体
+checker.check('CustomFont').then(result => {
+  console.log(result);
+});
+
+// 删除字体
+const fontFace = new FontFace('CustomFont', 'url(/fonts/custom-font.woff2)');
+deleteFont(fontFace);
+
+// 清除所有动态添加的字体
+clearFonts();
+```
+
+## API 参考
+
+### 主要函数
+
+- `checkFont(fontName: string, options?: FontCheckerOptions): Promise<FontCheckResult>`
+- `checkFonts(fontNames: string[], options?: FontCheckerOptions): Promise<FontLoadResult>`
+- `addFont(fontName: string, url: string, options?: FontFaceDescriptors, checkerOptions?: FontCheckerOptions): boolean`
+- `addFontFace(font: FontFace, options?: FontCheckerOptions): boolean`
+- `deleteFont(font: FontFace | string, options?: FontCheckerOptions): boolean`
+- `clearFonts(options?: FontCheckerOptions): boolean`
+- `isFontLoaded(fontName: string): boolean`
+- `waitForFonts(fontNames: string[], timeout?: number): Promise<FontLoadResult>`
+- `createFontChecker(options?: FontCheckerOptions): FontChecker`
+
+### 跨域相关函数
+
+- `loadFont(fontName: string, url: string, options?: FontFaceDescriptors, onSuccess?: () => void, onError?: (error: any, isCORSError: boolean) => void): boolean`
+- `isCrossDomainUrl(url: string): boolean`
+- `isFontCORSError(error: any): boolean`
+
+### 跨域字体加载
+
+当加载来自不同域的字体文件时，可能会遇到CORS（跨域资源共享）限制。该库提供了检测和处理跨域问题的功能：
+
+```javascript
+import { loadFont, isCrossDomainUrl } from 'font-load-checker';
+
+// 检查URL是否可能存在跨域问题
+const url = 'https://fonts.googleapis.com/css2?family=Roboto';
+const mightHaveCORSIssue = isCrossDomainUrl(url);
+console.log(`可能存在跨域问题: ${mightHaveCORSIssue}`);
+
+// 加载字体并处理可能的跨域错误
+loadFont(
+  'Roboto', 
+  url,
+  { display: 'swap' },
+  () => console.log('字体加载成功'),
+  (error, isCORSError) => {
+    if (isCORSError) {
+      console.error('加载失败：跨域资源共享(CORS)错误');
+      console.error('请确保字体服务器设置了正确的CORS头部');
+    } else {
+      console.error('加载失败，原因:', error);
+    }
+  }
+);
+```
+
+要解决跨域问题，字体服务器需要设置以下HTTP头部：
+
+```
+Access-Control-Allow-Origin: *  // 或特定域名
+```
