@@ -3,23 +3,18 @@ import FontChecker, { FontCheckerOptions, FontCheckResult, FontLoadResult } from
 // 全局字体检查器实例
 let globalFontChecker: FontChecker | null = null;
 
-// 扩展 FontFaceSet 接口以匹配最新的 Web API
-interface ExtendedFontFaceSet {
-  add: (font: FontFace) => void;
-  delete: (font: FontFace) => boolean;
-  clear: () => void;
-  check: (font: string) => boolean;
-  load: (font: string, text?: string) => Promise<FontFace[]>;
-  ready: Promise<FontFaceSet>;
-  forEach: (callbackfn: (value: FontFace) => void) => void;
-}
-
 /**
  * 获取或创建全局字体检查器实例
  */
 function getGlobalFontChecker(options?: FontCheckerOptions): FontChecker {
   if (!globalFontChecker) {
     globalFontChecker = new FontChecker(options);
+  } else if (options) {
+    // 如果已有实例但传入了新的选项，则更新实例的选项
+    if (options.timeout && options.timeout !== globalFontChecker['options'].timeout) {
+      // 创建一个新的实例，使用新的超时设置
+      globalFontChecker = new FontChecker(options);
+    }
   }
   return globalFontChecker;
 }
@@ -125,7 +120,7 @@ export function isFontLoaded(fontName: string): boolean {
  * 等待字体加载完成
  */
 export async function waitForFonts(fontNames: string[], timeout?: number): Promise<FontLoadResult> {
-  const checker = new FontChecker({ timeout });
+  const checker = getGlobalFontChecker({ timeout });
   return await checker.check(fontNames);
 }
 
@@ -159,8 +154,14 @@ export function loadFont(
     // 创建FontFace对象
     const fontFace = new FontFace(fontName, `url(${url})`, options);
     
-    // 添加到document.fonts
-    (document.fonts as unknown as ExtendedFontFaceSet).add(fontFace);
+    // 使用全局FontChecker实例添加字体
+    const checker = getGlobalFontChecker();
+    const added = checker.addFontFace(fontFace);
+    
+    if (!added) {
+      if (onError) onError(new Error('添加字体失败'), false);
+      return false;
+    }
     
     // 尝试加载字体
     fontFace.load().then(() => {

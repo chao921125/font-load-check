@@ -1,6 +1,6 @@
 {
   "name": "font-load-checker",
-  "version": "1.1.6",
+  "version": "1.2.1",
   "description": "一个用于检测、管理和操作字体的现代 JavaScript/TypeScript 库，基于最新的 Web Font API",
   "type": "module",
   "main": "dist/index.js",

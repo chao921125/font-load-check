@@ -162,6 +162,25 @@ clearFonts();
 如果需要更高级的控制，也可以使用FontChecker实例：
 
 ```javascript
+import FontChecker from 'font-load-checker';
+
+// 创建自定义配置的字体检查器
+const checker = FontChecker({ timeout: 5000 });
+
+// 添加字体
+checker.addFont('CustomFont', '/fonts/custom-font.woff2');
+
+// 检查字体
+checker.check('CustomFont').then(result => {
+  console.log(result);
+});
+
+// 删除字体
+checker.deleteFont('CustomFont');
+```
+
+```javascript
+// new 重新创建一个新实例
 import { createFontChecker } from 'font-load-checker';
 
 // 创建自定义配置的字体检查器
@@ -521,4 +540,28 @@ loadFont(
 
 ```
 Access-Control-Allow-Origin: *  // 或特定域名
+```
+
+### 全局字体检查器实例
+
+为了提高性能和保持状态一致性，库内部使用了一个全局的FontChecker实例。这意味着当你使用工具函数（如`addFont`、`checkFont`等）时，实际上是在操作同一个字体检查器实例，无需每次都创建新的实例。
+
+```javascript
+import { addFont, checkFont, deleteFont } from 'font-load-checker';
+
+// 这些函数共享同一个FontChecker实例
+addFont('MyCustomFont', '/fonts/custom-font.woff2');
+checkFont('MyCustomFont').then(result => console.log(result));
+deleteFont('MyCustomFont');
+```
+
+如果你需要完全独立的字体检查器实例，可以使用`createFontChecker`函数：
+
+```javascript
+import { createFontChecker } from 'font-load-checker';
+
+// 创建独立的字体检查器实例
+const myChecker = createFontChecker({ timeout: 5000 });
+myChecker.addFont('CustomFont', '/fonts/custom-font.woff2');
+myChecker.check('CustomFont').then(result => console.log(result));
 ```
