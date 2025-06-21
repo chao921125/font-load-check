@@ -19,9 +19,8 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "jsx": "react",
     "lib": ["ESNext", "DOM"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
