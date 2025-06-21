@@ -140,10 +140,11 @@ class FontChecker {
   private async checkSingleFont(fontName: string): Promise<FontCheckResult> {
     // 检查是否支持FontFace API
     if (typeof FontFace !== 'function') {
+      const isLoaded = document.fonts.check(`12px '${fontName}'`);
       return {
         name: fontName,
-        loaded: document.fonts.check(`12px '${fontName}'`),
-        status: document.fonts.check(`12px '${fontName}'`) ? 'loaded' : 'unloaded'
+        loaded: isLoaded,
+        status: isLoaded ? 'loaded' : 'unloaded'
       };
     }
 
@@ -169,9 +170,10 @@ class FontChecker {
       };
     } catch (error) {
       // 回退到传统检测方法
+      const isLoaded = document.fonts.check(`12px '${fontName}'`);
       return {
         name: fontName,
-        loaded: document.fonts.check(`12px '${fontName}'`),
+        loaded: isLoaded,
         status: 'fallback'
       };
     }

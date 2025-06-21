@@ -1,128 +1,192 @@
-# Font-Check
+# font-load-checker
 
 一个用于检测、管理和操作字体的现代 JavaScript/TypeScript 库，基于最新的 Web Font API。
 
-## 功能特点
+[![npm version](https://img.shields.io/npm/v/font-load-checker.svg)](https://www.npmjs.com/package/font-load-checker)
+[![license](https://img.shields.io/npm/l/font-load-checker.svg)](https://github.com/huangchao/font-load-checker/blob/main/LICENSE)
+[![npm downloads](https://img.shields.io/npm/dm/font-load-checker.svg)](https://www.npmjs.com/package/font-load-checker)
 
-- 检查字体是否已加载到浏览器中
-- 动态添加字体（使用 `document.fonts.add(font)`）
-- 动态删除添加的字体（使用 `document.fonts.delete(font)`）
-- 清除所有动态添加的字体
-- 支持 Promise 异步操作
-- 完全使用 TypeScript 编写，提供类型定义
-- 可在任何 JavaScript 项目中使用（Vue、React、原生 JS 等）
+English | [简体中文](README.md)
+
+## 特性
+
+* 🚀 轻量级，无外部依赖
+* 🔄 支持字体加载状态检测
+* 📦 支持动态字体管理（添加、删除、清除）
+* 💻 支持在浏览器环境中使用
+* 📱 支持 TypeScript，提供完整的类型定义
+* 🛠️ 提供丰富的工具函数
+* 🔧 支持多种导入方式（ES模块、CommonJS、UMD）
+
+## 功能
+
+### 字体检测
+
+* `check`: 检查字体是否已加载
+* `checkFont`: 检查单个字体
+* `checkFonts`: 检查多个字体
+* `isFontLoaded`: 同步检查字体加载状态
+
+### 字体管理
+
+* `addFont`: 动态添加字体
+* `deleteFont`: 删除字体
+* `clearFonts`: 清除所有动态添加的字体
+
+### 工具函数
+
+* `createFontChecker`: 创建字体检查器实例
+* `waitForFonts`: 等待字体加载完成
 
 ## 安装
 
+### npm
+
 ```bash
-# 使用 npm
 npm install font-load-checker
+```
 
-# 使用 yarn
+### yarn
+
+```bash
 yarn add font-load-checker
+```
 
-# 使用 pnpm
+### pnpm
+
+```bash
 pnpm add font-load-checker
 ```
 
-## 基本用法
+## 使用示例
 
-### 引入库
+### ES模块导入
 
 ```javascript
-// ES 模块
-import FontChecker from 'font-load-checker';
+import FontChecker, { checkFont, isFontLoaded } from 'font-load-checker';
 
-// CommonJS
-const FontChecker = require('font-load-checker');
+// 创建实例
+const checker = new FontChecker();
+
+// 检查字体
+const result = await checker.check('Arial');
+console.log(result.success); // true/false
+
+// 使用工具函数
+const loaded = isFontLoaded('Arial');
+console.log(loaded); // true/false
 ```
 
-### 创建实例
+### CommonJS导入
 
 ```javascript
-// 使用默认配置
-const fontChecker = new FontChecker();
+const FontChecker = require('font-load-checker');
 
-// 使用自定义配置
-const fontChecker = new FontChecker({
-  timeout: 5000 // 设置字体加载超时时间（毫秒）
+// 创建实例
+const checker = new FontChecker();
+
+// 检查字体
+checker.check('Arial').then(result => {
+  console.log(result.success);
 });
 ```
 
-### 检查字体
+### 在浏览器中使用
+
+```html
+<!-- 通过 CDN 引入 -->
+<script src="https://unpkg.com/font-load-checker/dist/index.umd.js"></script>
+<!-- 或者 -->
+<script src="https://cdn.jsdelivr.net/npm/font-load-checker/dist/index.umd.js"></script>
+
+<script>
+  // 全局变量 FontChecker
+  const checker = new FontChecker();
+  checker.check('Arial').then(result => {
+    console.log(result.success);
+  });
+</script>
+```
+
+## 快速开始
+
+### 基本用法
 
 ```javascript
+import FontChecker from 'font-load-checker';
+
+// 创建字体检查器
+const checker = new FontChecker();
+
 // 检查单个字体
-fontChecker.check('Arial')
-  .then(result => {
-    if (result.success) {
-      console.log('字体已加载');
-    } else {
-      console.log('字体加载失败', result.failedFonts);
-    }
-  });
+const result = await checker.check('Arial');
+if (result.success) {
+  console.log('Arial 字体已加载');
+} else {
+  console.log('Arial 字体加载失败');
+}
 
 // 检查多个字体
-fontChecker.check(['Arial', 'Helvetica', 'Times New Roman'])
-  .then(result => {
-    if (result.success) {
-      console.log('所有字体已加载');
-    } else {
-      console.log('部分字体加载失败', result.failedFonts);
-    }
-  });
-
-// 检查所有已加载的字体
-fontChecker.check()
-  .then(result => {
-    if (result.success) {
-      console.log('所有字体已加载');
-    } else {
-      console.log('部分字体加载失败', result.failedFonts);
-    }
-  });
-
-// 使用 async/await
-async function checkFont() {
-  const result = await fontChecker.check('Arial');
-  console.log(result);
+const result = await checker.check(['Arial', 'Helvetica', 'Times New Roman']);
+if (result.success) {
+  console.log('所有字体已加载');
+} else {
+  console.log('部分字体加载失败:', result.failedFonts);
 }
 ```
 
-### 动态添加字体
+### 动态字体管理
 
 ```javascript
-// 创建一个新的字体实例
-const fontFace = new FontFace('MyFont', 'url(/path/to/font.woff2)');
+import FontChecker from 'font-load-checker';
+
+const checker = new FontChecker();
+
+// 创建字体实例
+const fontFace = new FontFace('MyCustomFont', 'url(/fonts/myfont.woff2)');
 
 // 加载字体
 fontFace.load().then(() => {
   // 添加到字体检查器
-  const success = fontChecker.addFont(fontFace);
-  
+  const success = checker.addFont(fontFace);
   if (success) {
     console.log('字体添加成功');
   } else {
     console.log('字体添加失败');
   }
 });
+
+// 删除字体
+checker.deleteFont(fontFace);
+
+// 清除所有动态添加的字体
+checker.clearFonts();
 ```
 
-### 删除字体
+### 使用工具函数
 
 ```javascript
-// 删除特定字体
-const success = fontChecker.deleteFont(fontFace);
+import { checkFont, checkFonts, isFontLoaded, waitForFonts } from 'font-load-checker';
+
+// 检查单个字体
+const result = await checkFont('Arial');
+console.log(result.loaded);
+
+// 检查多个字体
+const result = await checkFonts(['Arial', 'Helvetica']);
+console.log(result.success);
+
+// 同步检查字体
+const loaded = isFontLoaded('Arial');
+console.log(loaded);
+
+// 等待字体加载
+const result = await waitForFonts(['MyFont', 'Arial'], 10000);
 ```
 
-### 清除所有添加的字体
+## 在框架中使用
 
-```javascript
-// 清除所有通过 fontChecker.addFont() 添加的字体
-fontChecker.clearFonts();
-```
-
-## 在 Vue 项目中使用
+### Vue 3
 
 ```vue
 <template>
@@ -140,31 +204,22 @@ fontChecker.clearFonts();
   </div>
 </template>
 
-<script>
-import FontChecker from 'font-load-checker';
+<script setup>
 import { ref, onMounted } from 'vue';
+import FontChecker from 'font-load-checker';
 
-export default {
-  setup() {
-    const loading = ref(true);
-    const result = ref(null);
-    
-    onMounted(async () => {
-      const fontChecker = new FontChecker();
-      result.value = await fontChecker.check(['Arial', 'Helvetica']);
-      loading.value = false;
-    });
-    
-    return {
-      loading,
-      result
-    };
-  }
-};
+const loading = ref(true);
+const result = ref(null);
+
+onMounted(async () => {
+  const checker = new FontChecker();
+  result.value = await checker.check(['Arial', 'Helvetica']);
+  loading.value = false;
+});
 </script>
 ```
 
-## 在 React 项目中使用
+### React
 
 ```jsx
 import React, { useState, useEffect } from 'react';
@@ -176,8 +231,8 @@ function FontCheckComponent() {
   
   useEffect(() => {
     async function checkFonts() {
-      const fontChecker = new FontChecker();
-      const checkResult = await fontChecker.check(['Arial', 'Helvetica']);
+      const checker = new FontChecker();
+      const checkResult = await checker.check(['Arial', 'Helvetica']);
       setResult(checkResult);
       setLoading(false);
     }
@@ -210,48 +265,53 @@ function FontCheckComponent() {
 export default FontCheckComponent;
 ```
 
-## API 参考
+## API 文档
 
-### FontChecker 类
+详细的 API 文档请查看 [API 文档](docs/API.md)。
 
-#### 构造函数
+### 核心类
+
+#### FontChecker
+
+字体检查器的主类，提供字体加载检测和管理功能。
 
 ```typescript
 constructor(options?: FontCheckerOptions)
 ```
 
-- `options.timeout`: 字体加载超时时间（毫秒），默认为 3000。
-
-#### 方法
-
+**方法：**
 - `async check(fontNames?: string | string[]): Promise<FontLoadResult>`
-  检查字体是否已加载。如果不提供参数，则检查所有已加载的字体。
-
 - `addFont(font: FontFace): boolean`
-  动态添加字体，返回是否添加成功。
-
 - `deleteFont(font: FontFace): boolean`
-  删除之前通过 `addFont` 添加的字体，返回是否删除成功。
-
 - `clearFonts(): boolean`
-  清除所有通过 `addFont` 添加的字体，返回是否清除成功。
+
+### 工具函数
+
+- `createFontChecker(options?: FontCheckerOptions): FontChecker`
+- `checkFont(fontName: string, options?: FontCheckerOptions): Promise<FontCheckResult>`
+- `checkFonts(fontNames: string[], options?: FontCheckerOptions): Promise<FontLoadResult>`
+- `addFont(font: FontFace, options?: FontCheckerOptions): boolean`
+- `deleteFont(font: FontFace, options?: FontCheckerOptions): boolean`
+- `clearFonts(options?: FontCheckerOptions): boolean`
+- `isFontLoaded(fontName: string): boolean`
+- `waitForFonts(fontNames: string[], timeout?: number): Promise<FontLoadResult>`
 
 ### 类型定义
 
 ```typescript
 interface FontCheckerOptions {
-  timeout?: number;
+  timeout?: number; // 字体加载超时时间（毫秒），默认为 3000
 }
 
 interface FontCheckResult {
-  name: string;
-  loaded: boolean;
-  status: string;
+  name: string;      // 字体名称
+  loaded: boolean;   // 是否已加载
+  status: string;    // 加载状态：'loaded' | 'unloaded' | 'error' | 'fallback'
 }
 
 interface FontLoadResult {
-  success: boolean;
-  failedFonts?: FontCheckResult[];
+  success: boolean;                    // 是否全部加载成功
+  failedFonts?: FontCheckResult[];     // 失败的字体列表（仅在 success 为 false 时存在）
 }
 ```
 
@@ -270,7 +330,7 @@ interface FontLoadResult {
 
 ```bash
 # 克隆项目
-git clone https://github.com/your-username/font-check.git
+git clone https://github.com/huangchao/font-load-checker.git
 
 # 安装依赖
 pnpm install
@@ -285,6 +345,22 @@ pnpm build
 pnpm test
 ```
 
+## 贡献指南
+
+1. Fork 本仓库
+2. 创建你的特性分支 (`git checkout -b feature/amazing-feature`)
+3. 提交你的更改 (`git commit -m 'Add some amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 打开一个 Pull Request
+
 ## 许可证
 
-MIT
+MIT © huangchao
+
+## 相关链接
+
+- [使用指南](docs/README.md)
+- [API 文档](docs/API.md)
+- [示例代码](examples/)
+- [更新日志](CHANGELOG.md)
+- [问题反馈](https://github.com/huangchao/font-load-checker/issues)

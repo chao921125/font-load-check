@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import FontChecker from '../core/FontChecker';
 
 // 模拟FontFace API
@@ -62,12 +61,12 @@ const mockFonts = {
 
 describe('FontChecker', () => {
   // 保存原始全局对象
-  const originalFontFace = global.FontFace;
+  const originalFontFace = (global as any).FontFace;
   const originalDocumentFonts = document.fonts;
   
   beforeAll(() => {
     // 模拟全局对象
-    global.FontFace = MockFontFace as any;
+    (global as any).FontFace = MockFontFace;
     Object.defineProperty(document, 'fonts', {
       value: mockFonts,
       writable: true
@@ -76,7 +75,7 @@ describe('FontChecker', () => {
   
   afterAll(() => {
     // 恢复原始全局对象
-    global.FontFace = originalFontFace;
+    (global as any).FontFace = originalFontFace;
     Object.defineProperty(document, 'fonts', {
       value: originalDocumentFonts,
       writable: true

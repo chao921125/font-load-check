@@ -21,6 +21,6 @@
     "outDir": "./dist",
     "lib": ["ESNext", "DOM"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["index.ts", "src/**/*.ts", "src/**/*.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

@@ -14,7 +14,7 @@ const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 export default [
   // 普通打包
   {
-    input: 'src/index.ts',
+    input: 'index.ts',
     output: [
       {
         file: pkg.main,
@@ -53,7 +53,7 @@ export default [
   },
   // 类型声明文件打包
   {
-    input: 'src/index.ts',
+    input: 'index.ts',
     output: [{ file: pkg.types, format: 'es' }],
     plugins: [
       dts({

@@ -1,13 +1,17 @@
 {
   "name": "font-load-checker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "一个用于检测、管理和操作字体的现代 JavaScript/TypeScript 库，基于最新的 Web Font API",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
+  "unpkg": "dist/index.umd.js",
+  "jsdelivr": "dist/index.umd.js",
   "files": [
     "dist",
+    "docs",
+    "examples",
     "README.md",
     "LICENSE"
   ],
@@ -15,6 +19,7 @@
     "dev": "rollup -c -w",
     "build": "rollup -c",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "prepublishOnly": "npm run build",
     "clean": "rm -rf dist",
     "prebuild": "npm run clean"
@@ -37,12 +42,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/huangchao/font-check.git"
+    "url": "https://github.com/huangchao/font-load-checker.git"
   },
   "bugs": {
-    "url": "https://github.com/huangchao/font-check/issues"
+    "url": "https://github.com/huangchao/font-load-checker/issues"
   },
-  "homepage": "https://github.com/huangchao/font-check#readme",
+  "homepage": "https://github.com/huangchao/font-load-checker#readme",
   "engines": {
     "node": ">=14.0.0"
   },
