@@ -1,7 +1,7 @@
 {
   "name": "font-load-checker",
-  "version": "1.2.1",
-  "description": "一个用于检测、管理和操作字体的现代 JavaScript/TypeScript 库，基于最新的 Web Font API",
+  "version": "1.2.2",
+  "description": "A modern JavaScript/TypeScript library for detecting, managing, and manipulating fonts, based on the latest Web Font API",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
