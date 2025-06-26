@@ -2,8 +2,6 @@
 node_modules
 dist
 dist-ssr
-tests
-test
 *.local
 
 # local env files
