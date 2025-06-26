@@ -1,11 +1,11 @@
 # Contributing Guide
 
-Thank you for considering contributing to font-load-checker! Here are some guidelines to help you get started.
+Thank you for considering contributing to font-load-check! Here are some guidelines to help you get started.
 
 ## Development Environment Setup
 
 1. Fork this repository
-2. Clone your fork: `git clone https://github.com/YOUR_USERNAME/font-load-checker.git`
+2. Clone your fork: `git clone https://github.com/YOUR_USERNAME/font-load-check.git`
 3. Install dependencies: `npm install` or `pnpm install`
 4. Create a new branch: `git checkout -b feature/your-feature-name`
 

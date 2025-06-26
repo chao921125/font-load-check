@@ -1,10 +1,10 @@
-# font-load-checker
+# font-load-check
 
 A modern JavaScript/TypeScript library for detecting, managing, and manipulating fonts, based on the latest Web Font API.
 
-[![npm version](https://img.shields.io/npm/v/font-load-checker.svg)](https://www.npmjs.com/package/font-load-checker)
-[![license](https://img.shields.io/npm/l/font-load-checker.svg)](https://github.com/huangchao/font-load-checker/blob/main/LICENSE)
-[![npm downloads](https://img.shields.io/npm/dm/font-load-checker.svg)](https://www.npmjs.com/package/font-load-checker)
+[![npm version](https://img.shields.io/npm/v/font-load-check.svg)](https://www.npmjs.com/package/font-load-check)
+[![license](https://img.shields.io/npm/l/font-load-check.svg)](https://github.com/chao921125/font-load-check/blob/main/LICENSE)
+[![npm downloads](https://img.shields.io/npm/dm/font-load-check.svg)](https://www.npmjs.com/package/font-load-check)
 
 English | [简体中文](README.md)
 
@@ -43,19 +43,19 @@ English | [简体中文](README.md)
 ### npm
 
 ```bash
-npm install font-load-checker
+npm install font-load-check
 ```
 
 ### yarn
 
 ```bash
-yarn add font-load-checker
+yarn add font-load-check
 ```
 
 ### pnpm
 
 ```bash
-pnpm add font-load-checker
+pnpm add font-load-check
 ```
 
 ## Usage Examples
@@ -63,7 +63,7 @@ pnpm add font-load-checker
 ### ES Module Import
 
 ```javascript
-import FontChecker, { checkFont, isFontLoaded } from 'font-load-checker';
+import FontChecker, { checkFont, isFontLoaded } from 'font-load-check';
 
 // Create an instance
 const checker = new FontChecker();
@@ -80,7 +80,7 @@ console.log(loaded); // true/false
 ### CommonJS Import
 
 ```javascript
-const FontChecker = require('font-load-checker');
+const FontChecker = require('font-load-check');
 
 // Create an instance
 const checker = new FontChecker();
@@ -95,9 +95,9 @@ checker.check('Arial').then(result => {
 
 ```html
 <!-- Import via CDN -->
-<script src="https://unpkg.com/font-load-checker/dist/index.umd.js"></script>
+<script src="https://unpkg.com/font-load-check/dist/index.umd.js"></script>
 <!-- Or -->
-<script src="https://cdn.jsdelivr.net/npm/font-load-checker/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/font-load-check/dist/index.umd.js"></script>
 
 <script>
   // Global variable FontChecker
@@ -113,7 +113,7 @@ checker.check('Arial').then(result => {
 ### Basic Usage
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 // Create a font checker
 const checker = new FontChecker();
@@ -138,7 +138,7 @@ if (result.success) {
 ### Dynamic Font Management
 
 ```javascript
-import { addFont, deleteFont, clearFonts } from 'font-load-checker';
+import { addFont, deleteFont, clearFonts } from 'font-load-check';
 
 // Directly add a font without creating a FontFace object
 addFont('MyCustomFont', '/fonts/custom-font.woff2');
@@ -162,7 +162,7 @@ clearFonts();
 For more advanced control, you can also use a FontChecker instance:
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 // Create a font checker with custom configuration
 const checker = new FontChecker({ timeout: 5000 });
@@ -181,7 +181,7 @@ checker.deleteFont('CustomFont');
 
 ```javascript
 // Use the factory function to create a new instance
-import { createFontChecker } from 'font-load-checker';
+import { createFontChecker } from 'font-load-check';
 
 // Create a font checker with custom configuration
 const checker = createFontChecker({ timeout: 5000 });
@@ -201,7 +201,7 @@ checker.deleteFont('CustomFont');
 ### Using Utility Functions
 
 ```javascript
-import { checkFont, checkFonts, isFontLoaded, waitForFonts } from 'font-load-checker';
+import { checkFont, checkFonts, isFontLoaded, waitForFonts } from 'font-load-check';
 
 // Check a single font
 const result = await checkFont('Arial');
@@ -241,7 +241,7 @@ const result = await waitForFonts(['MyFont', 'Arial'], 10000);
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 const loading = ref(true);
 const result = ref(null);
@@ -258,7 +258,7 @@ onMounted(async () => {
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 function FontCheckComponent() {
   const [loading, setLoading] = useState(true);
@@ -319,7 +319,7 @@ For browsers that don't support the CSS Font Loading API, the library falls back
 
 ```bash
 # Clone the project
-git clone https://github.com/huangchao/font-load-checker.git
+git clone https://github.com/chao921125/font-load-check.git
 
 # Install dependencies
 pnpm install
@@ -340,7 +340,7 @@ If you want to contribute to this project, please see the [Contributing Guide](d
 
 ## License
 
-MIT © huangchao
+MIT © chao921125
 
 ## Related Links
 

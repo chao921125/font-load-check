@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useFontCheck, createFontChecker } from 'font-load-checker';
+import { useFontCheck, createFontChecker } from 'font-load-check';
 
 // 基本使用示例
 function BasicExample() {

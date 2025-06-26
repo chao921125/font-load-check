@@ -18,7 +18,7 @@ constructor(options?: FontCheckerOptions)
 
 **Example:**
 ```typescript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 // With default configuration
 const checker = new FontChecker();
@@ -129,7 +129,7 @@ Creates a font checker instance.
 
 **Example:**
 ```typescript
-import { createFontChecker } from 'font-load-checker';
+import { createFontChecker } from 'font-load-check';
 
 const checker = createFontChecker({ timeout: 5000 });
 ```
@@ -147,7 +147,7 @@ Checks if a single font is loaded.
 
 **Example:**
 ```typescript
-import { checkFont } from 'font-load-checker';
+import { checkFont } from 'font-load-check';
 
 const result = await checkFont('Arial');
 console.log(result.loaded); // true/false
@@ -166,7 +166,7 @@ Checks if multiple fonts are loaded.
 
 **Example:**
 ```typescript
-import { checkFonts } from 'font-load-checker';
+import { checkFonts } from 'font-load-check';
 
 const result = await checkFonts(['Arial', 'Helvetica']);
 if (result.success) {
@@ -191,7 +191,7 @@ Dynamically adds a font.
 
 **Example:**
 ```typescript
-import { addFont } from 'font-load-checker';
+import { addFont } from 'font-load-check';
 
 const success = addFont('MyFont', '/path/to/font.woff2');
 ```
@@ -209,7 +209,7 @@ Dynamically adds a font using a FontFace object.
 
 **Example:**
 ```typescript
-import { addFontFace } from 'font-load-checker';
+import { addFontFace } from 'font-load-check';
 
 const fontFace = new FontFace('MyFont', 'url(/path/to/font.woff2)');
 const success = addFontFace(fontFace);
@@ -228,7 +228,7 @@ Deletes a font.
 
 **Example:**
 ```typescript
-import { deleteFont } from 'font-load-checker';
+import { deleteFont } from 'font-load-check';
 
 // Delete by FontFace object
 const success = deleteFont(fontFace);
@@ -249,7 +249,7 @@ Clears all dynamically added fonts.
 
 **Example:**
 ```typescript
-import { clearFonts } from 'font-load-checker';
+import { clearFonts } from 'font-load-check';
 
 const success = clearFonts();
 ```
@@ -266,7 +266,7 @@ Checks if a font is loaded (synchronous method).
 
 **Example:**
 ```typescript
-import { isFontLoaded } from 'font-load-checker';
+import { isFontLoaded } from 'font-load-check';
 
 const loaded = isFontLoaded('Arial');
 console.log(loaded); // true/false
@@ -285,7 +285,7 @@ Waits for fonts to load.
 
 **Example:**
 ```typescript
-import { waitForFonts } from 'font-load-checker';
+import { waitForFonts } from 'font-load-check';
 
 const result = await waitForFonts(['Arial', 'Helvetica'], 5000);
 ```
@@ -306,7 +306,7 @@ Loads a font and monitors its loading status.
 
 **Example:**
 ```typescript
-import { loadFont } from 'font-load-checker';
+import { loadFont } from 'font-load-check';
 
 loadFont(
   'MyFont',

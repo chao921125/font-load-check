@@ -5,19 +5,19 @@
 ### npm
 
 ```bash
-npm install font-load-checker
+npm install font-load-check
 ```
 
 ### yarn
 
 ```bash
-yarn add font-load-checker
+yarn add font-load-check
 ```
 
 ### pnpm
 
 ```bash
-pnpm add font-load-checker
+pnpm add font-load-check
 ```
 
 ## 基本用法
@@ -25,7 +25,7 @@ pnpm add font-load-checker
 ### ES模块导入
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 // 创建实例
 const checker = new FontChecker();
@@ -38,7 +38,7 @@ console.log(result.success); // true/false
 ### CommonJS导入
 
 ```javascript
-const FontChecker = require('font-load-checker');
+const FontChecker = require('font-load-check');
 
 // 创建实例
 const checker = new FontChecker();
@@ -53,9 +53,9 @@ checker.check('Arial').then(result => {
 
 ```html
 <!-- 通过 CDN 引入 -->
-<script src="https://unpkg.com/font-load-checker/dist/index.umd.js"></script>
+<script src="https://unpkg.com/font-load-check/dist/index.umd.js"></script>
 <!-- 或者 -->
-<script src="https://cdn.jsdelivr.net/npm/font-load-checker/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/font-load-check/dist/index.umd.js"></script>
 
 <script>
   // 全局变量 FontChecker
@@ -71,7 +71,7 @@ checker.check('Arial').then(result => {
 ### 检查单个字体
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 const checker = new FontChecker();
 
@@ -87,7 +87,7 @@ if (result.success) {
 ### 检查多个字体
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 const checker = new FontChecker();
 
@@ -103,7 +103,7 @@ if (result.success) {
 ### 检查所有字体
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 const checker = new FontChecker();
 
@@ -115,7 +115,7 @@ console.log('所有字体加载状态:', result);
 ### 动态添加字体
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 const checker = new FontChecker();
 
@@ -137,7 +137,7 @@ fontFace.load().then(() => {
 ### 使用工具函数
 
 ```javascript
-import { checkFont, checkFonts, isFontLoaded } from 'font-load-checker';
+import { checkFont, checkFonts, isFontLoaded } from 'font-load-check';
 
 // 检查单个字体
 const result = await checkFont('Arial');
@@ -174,7 +174,7 @@ console.log(loaded);
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 const loading = ref(true);
 const result = ref(null);
@@ -191,7 +191,7 @@ onMounted(async () => {
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 function FontCheckComponent() {
   const [loading, setLoading] = useState(true);
@@ -238,7 +238,7 @@ export default FontCheckComponent;
 ### 超时设置
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 // 设置5秒超时
 const checker = new FontChecker({ timeout: 5000 });
@@ -250,7 +250,7 @@ const result = await checker.check('Arial');
 ### 错误处理
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 const checker = new FontChecker();
 
@@ -273,7 +273,7 @@ try {
 ### 1. 检查字体可用性
 
 ```javascript
-import { isFontLoaded } from 'font-load-checker';
+import { isFontLoaded } from 'font-load-check';
 
 // 在页面加载时检查关键字体
 document.addEventListener('DOMContentLoaded', () => {
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ### 2. 等待字体加载
 
 ```javascript
-import { waitForFonts } from 'font-load-checker';
+import { waitForFonts } from 'font-load-check';
 
 // 等待字体加载完成后再显示内容
 async function initializeApp() {

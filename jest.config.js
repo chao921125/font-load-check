@@ -15,4 +15,5 @@ export default {
     '/node_modules/',
     '/dist/'
   ],
+  setupFiles: ['./jest.setup.js'],
 };

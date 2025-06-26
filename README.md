@@ -1,10 +1,10 @@
-# font-load-checker
+# font-load-check
 
 一个用于检测、管理和操作字体的现代 JavaScript/TypeScript 库，基于最新的 Web Font API。
 
-[![npm version](https://img.shields.io/npm/v/font-load-checker.svg)](https://www.npmjs.com/package/font-load-checker)
-[![license](https://img.shields.io/npm/l/font-load-checker.svg)](https://github.com/huangchao/font-load-checker/blob/main/LICENSE)
-[![npm downloads](https://img.shields.io/npm/dm/font-load-checker.svg)](https://www.npmjs.com/package/font-load-checker)
+[![npm version](https://img.shields.io/npm/v/font-load-check.svg)](https://www.npmjs.com/package/font-load-check)
+[![license](https://img.shields.io/npm/l/font-load-check.svg)](https://github.com/chao921125/font-load-check/blob/main/LICENSE)
+[![npm downloads](https://img.shields.io/npm/dm/font-load-check.svg)](https://www.npmjs.com/package/font-load-check)
 
 [English](README.en.md) | 简体中文
 
@@ -43,19 +43,19 @@
 ### npm
 
 ```bash
-npm install font-load-checker
+npm install font-load-check
 ```
 
 ### yarn
 
 ```bash
-yarn add font-load-checker
+yarn add font-load-check
 ```
 
 ### pnpm
 
 ```bash
-pnpm add font-load-checker
+pnpm add font-load-check
 ```
 
 ## 使用示例
@@ -63,7 +63,7 @@ pnpm add font-load-checker
 ### ES模块导入
 
 ```javascript
-import FontChecker, { checkFont, isFontLoaded } from 'font-load-checker';
+import FontChecker, { checkFont, isFontLoaded } from 'font-load-check';
 
 // 创建实例
 const checker = new FontChecker();
@@ -80,7 +80,7 @@ console.log(loaded); // true/false
 ### CommonJS导入
 
 ```javascript
-const FontChecker = require('font-load-checker');
+const FontChecker = require('font-load-check');
 
 // 创建实例
 const checker = new FontChecker();
@@ -95,9 +95,9 @@ checker.check('Arial').then(result => {
 
 ```html
 <!-- 通过 CDN 引入 -->
-<script src="https://unpkg.com/font-load-checker/dist/index.umd.js"></script>
+<script src="https://unpkg.com/font-load-check/dist/index.umd.js"></script>
 <!-- 或者 -->
-<script src="https://cdn.jsdelivr.net/npm/font-load-checker/dist/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/font-load-check/dist/index.umd.js"></script>
 
 <script>
   // 全局变量 FontChecker
@@ -113,7 +113,7 @@ checker.check('Arial').then(result => {
 ### 基本用法
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 // 创建字体检查器
 const checker = new FontChecker();
@@ -138,7 +138,7 @@ if (result.success) {
 ### 动态字体管理
 
 ```javascript
-import { addFont, deleteFont, clearFonts } from 'font-load-checker';
+import { addFont, deleteFont, clearFonts } from 'font-load-check';
 
 // 直接添加字体，无需创建FontFace对象
 addFont('MyCustomFont', '/fonts/custom-font.woff2');
@@ -162,7 +162,7 @@ clearFonts();
 如果需要更高级的控制，也可以使用FontChecker实例：
 
 ```javascript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 // 创建自定义配置的字体检查器
 const checker = new FontChecker({ timeout: 5000 });
@@ -181,7 +181,7 @@ checker.deleteFont('CustomFont');
 
 ```javascript
 // 使用工厂函数创建一个新实例
-import { createFontChecker } from 'font-load-checker';
+import { createFontChecker } from 'font-load-check';
 
 // 创建自定义配置的字体检查器
 const checker = createFontChecker({ timeout: 5000 });
@@ -201,7 +201,7 @@ checker.deleteFont('CustomFont');
 ### 使用工具函数
 
 ```javascript
-import { checkFont, checkFonts, isFontLoaded, waitForFonts } from 'font-load-checker';
+import { checkFont, checkFonts, isFontLoaded, waitForFonts } from 'font-load-check';
 
 // 检查单个字体
 const result = await checkFont('Arial');
@@ -241,7 +241,7 @@ const result = await waitForFonts(['MyFont', 'Arial'], 10000);
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 const loading = ref(true);
 const result = ref(null);
@@ -258,7 +258,7 @@ onMounted(async () => {
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 function FontCheckComponent() {
   const [loading, setLoading] = useState(true);
@@ -319,7 +319,7 @@ export default FontCheckComponent;
 
 ```bash
 # 克隆项目
-git clone https://github.com/huangchao/font-load-checker.git
+git clone https://github.com/chao921125/font-load-check.git
 
 # 安装依赖
 pnpm install
@@ -340,7 +340,7 @@ pnpm test
 
 ## 许可证
 
-MIT © huangchao
+MIT © chao921125
 
 ## 相关链接
 

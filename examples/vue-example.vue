@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useFontCheck, createFontChecker } from 'font-load-checker';
+import { useFontCheck, createFontChecker } from 'font-load-check';
 
 // 使用组合式API
 const { results: fontResults, loading, error } = useFontCheck(['Arial', 'Helvetica', 'Times New Roman', 'NonExistentFont']);

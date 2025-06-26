@@ -18,7 +18,7 @@ constructor(options?: FontCheckerOptions)
 
 **示例：**
 ```typescript
-import FontChecker from 'font-load-checker';
+import FontChecker from 'font-load-check';
 
 // 使用默认配置
 const checker = new FontChecker();
@@ -108,7 +108,7 @@ const success = checker.clearFonts();
 
 **示例：**
 ```typescript
-import { createFontChecker } from 'font-load-checker';
+import { createFontChecker } from 'font-load-check';
 
 const checker = createFontChecker({ timeout: 5000 });
 ```
@@ -126,7 +126,7 @@ const checker = createFontChecker({ timeout: 5000 });
 
 **示例：**
 ```typescript
-import { checkFont } from 'font-load-checker';
+import { checkFont } from 'font-load-check';
 
 const result = await checkFont('Arial');
 console.log(result.loaded); // true/false
@@ -145,7 +145,7 @@ console.log(result.loaded); // true/false
 
 **示例：**
 ```typescript
-import { checkFonts } from 'font-load-checker';
+import { checkFonts } from 'font-load-check';
 
 const result = await checkFonts(['Arial', 'Helvetica']);
 if (result.success) {
@@ -168,7 +168,7 @@ if (result.success) {
 
 **示例：**
 ```typescript
-import { addFont } from 'font-load-checker';
+import { addFont } from 'font-load-check';
 
 const fontFace = new FontFace('MyFont', 'url(/path/to/font.woff2)');
 const success = addFont(fontFace);
@@ -187,7 +187,7 @@ const success = addFont(fontFace);
 
 **示例：**
 ```typescript
-import { deleteFont } from 'font-load-checker';
+import { deleteFont } from 'font-load-check';
 
 const success = deleteFont(fontFace);
 ```
@@ -204,7 +204,7 @@ const success = deleteFont(fontFace);
 
 **示例：**
 ```typescript
-import { clearFonts } from 'font-load-checker';
+import { clearFonts } from 'font-load-check';
 
 const success = clearFonts();
 ```
@@ -221,7 +221,7 @@ const success = clearFonts();
 
 **示例：**
 ```typescript
-import { isFontLoaded } from 'font-load-checker';
+import { isFontLoaded } from 'font-load-check';
 
 const loaded = isFontLoaded('Arial');
 console.log(loaded); // true/false
@@ -240,7 +240,7 @@ console.log(loaded); // true/false
 
 **示例：**
 ```typescript
-import { waitForFonts } from 'font-load-checker';
+import { waitForFonts } from 'font-load-check';
 
 const result = await waitForFonts(['Arial', 'Helvetica'], 5000);
 ```

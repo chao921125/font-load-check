@@ -4,14 +4,14 @@
     <metrics statements="87" coveredstatements="73" conditionals="29" coveredconditionals="21" methods="25" coveredmethods="22" elements="141" coveredelements="116" complexity="0" loc="87" ncloc="87" packages="3" files="3" classes="3"/>
     <package name="src">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="index.ts" path="/Users/huangchao/Work/GitHub/font-load-check/src/index.ts">
+      <file name="index.ts" path="/Users/chao921125/Work/GitHub/font-load-check/src/index.ts">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.core">
       <metrics statements="60" coveredstatements="50" conditionals="21" coveredconditionals="14" methods="14" coveredmethods="13"/>
-      <file name="FontChecker.ts" path="/Users/huangchao/Work/GitHub/font-load-check/src/core/FontChecker.ts">
+      <file name="FontChecker.ts" path="/Users/chao921125/Work/GitHub/font-load-check/src/core/FontChecker.ts">
         <metrics statements="60" coveredstatements="50" conditionals="21" coveredconditionals="14" methods="14" coveredmethods="13"/>
         <line num="34" count="17" type="stmt"/>
         <line num="37" count="17" type="stmt"/>
@@ -77,7 +77,7 @@
     </package>
     <package name="src.utils">
       <metrics statements="26" coveredstatements="23" conditionals="8" coveredconditionals="7" methods="10" coveredmethods="9"/>
-      <file name="fontUtils.ts" path="/Users/huangchao/Work/GitHub/font-load-check/src/utils/fontUtils.ts">
+      <file name="fontUtils.ts" path="/Users/chao921125/Work/GitHub/font-load-check/src/utils/fontUtils.ts">
         <metrics statements="26" coveredstatements="23" conditionals="8" coveredconditionals="7" methods="10" coveredmethods="9"/>
         <line num="4" count="1" type="stmt"/>
         <line num="10" count="8" type="cond" truecount="2" falsecount="0"/>

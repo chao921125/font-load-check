@@ -100,6 +100,7 @@ class FontChecker {
    * @returns 是否可能存在跨域问题
    */
   private isCrossDomainUrl(url: string): boolean {
+    if (!url) return false;
     // 如果是相对路径，则不存在跨域问题
     if (url.startsWith('/') && !url.startsWith('//')) {
       return false;

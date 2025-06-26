@@ -1,11 +1,11 @@
 # 贡献指南
 
-感谢您考虑为 font-load-checker 做出贡献！以下是一些指导方针，可以帮助您开始。
+感谢您考虑为 font-load-check 做出贡献！以下是一些指导方针，可以帮助您开始。
 
 ## 开发环境设置
 
 1. Fork 这个仓库
-2. 克隆您的 fork：`git clone https://github.com/YOUR_USERNAME/font-load-checker.git`
+2. 克隆您的 fork：`git clone https://github.com/YOUR_USERNAME/font-load-check.git`
 3. 安装依赖：`npm install` 或 `pnpm install`
 4. 创建一个新分支：`git checkout -b feature/your-feature-name`
 
